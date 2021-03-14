@@ -13,10 +13,41 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "main.h"
+#include "input.h"
 
 bool   cannon_keyboard_input = true;
 bool   drag_pan = false, old_cki;
 double drag_oldx = -1, drag_oldy = -1;
+
+// camera movement
+bool a = false;
+bool s = false;
+bool d = false;
+bool w = false;
+// camera zoom in and zoom out
+bool z = false;
+bool x = false;
+// camera rotate about object
+bool c = false;
+
+// object movement
+bool key_up = false;
+bool key_down = false;
+bool key_left = false;
+bool key_right = false;
+// object move out and in
+bool o = false;
+bool i = false;
+// object spin
+bool b = false;
+
+// throw camera up to (0,5,0)
+bool u = false;
+// throw camera left to (-5,0,0)
+bool l = false;
+// throw camera front to (0,0,5)
+bool n = false;
+
 
 using namespace std;
 
@@ -26,24 +57,128 @@ void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods) {
     // Function is called first on GLFW_PRESS.
 
     if (action == GLFW_RELEASE) {
-        // switch (key) {
-        // case GLFW_KEY_C:
-        // rectangle_rot_status = !rectangle_rot_status;
-        // break;
-        // case GLFW_KEY_P:
-        // triangle_rot_status = !triangle_rot_status;
-        // break;
-        // case GLFW_KEY_X:
-        //// do something ..
-        // break;
-        // default:
-        // break;
-        // }
+        switch (key) {
+        case GLFW_KEY_ESCAPE:
+            quit(window);
+            break;
+        case GLFW_KEY_A:
+            a = false;
+            break;
+        case GLFW_KEY_S:
+            s = false;
+            break;
+        case GLFW_KEY_D:
+            d = false;
+            break;
+        case GLFW_KEY_W:
+            w = false;
+            break;
+        case GLFW_KEY_Z:
+            z = false;
+            break;
+        case GLFW_KEY_X:
+            x = false;
+            break;
+        case GLFW_KEY_C:
+            c = false;
+            break;
+            
+        case GLFW_KEY_UP:
+            key_up = false;
+            break;
+        case GLFW_KEY_DOWN:
+            key_down = false;
+            break;
+        case GLFW_KEY_RIGHT:
+            key_right = false;
+            break;
+        case GLFW_KEY_LEFT:
+            key_left = false;
+            break;
+        case GLFW_KEY_O:
+            o = false;
+            break;
+        case GLFW_KEY_I:
+            i = false;
+            break;
+        case GLFW_KEY_B:
+            b = false;
+            break;
+            
+        case GLFW_KEY_U:
+            u = false;
+            break;
+        case GLFW_KEY_L:
+            l = false;
+            break;
+        case GLFW_KEY_N:
+            n = false;
+            break;
+        default:
+            break;
+        }
     } else if (action == GLFW_PRESS) {
         switch (key) {
         case GLFW_KEY_ESCAPE:
             quit(window);
             break;
+        case GLFW_KEY_A:
+            a = true;
+            break;
+        case GLFW_KEY_S:
+            s = true;
+            break;
+        case GLFW_KEY_D:
+            d = true;
+            break;
+        case GLFW_KEY_W:
+            w = true;
+            break;
+        case GLFW_KEY_Z:
+            z = true;
+            break;
+        case GLFW_KEY_X:
+            x = true;
+            break;
+        case GLFW_KEY_C:
+            c = true;
+            break;
+            
+        case GLFW_KEY_UP:
+            key_up = true;
+            break;
+        case GLFW_KEY_DOWN:
+            key_down = true;
+            break;
+        case GLFW_KEY_RIGHT:
+            key_right = true;
+            break;
+        case GLFW_KEY_LEFT:
+            key_left = true;
+            break;
+        case GLFW_KEY_O:
+            o = true;
+            break;
+        case GLFW_KEY_I:
+            i = true;
+            break;
+        case GLFW_KEY_B:
+            b = true;
+            break;
+            
+        case GLFW_KEY_U:
+            u = true;
+            break;
+        case GLFW_KEY_L:
+            l = true;
+            break;
+        case GLFW_KEY_N:
+            n = true;
+            break;
+
+        case GLFW_KEY_SPACE:
+            id++;
+            id = id%3;
         default:
             break;
         }
@@ -57,9 +192,6 @@ void keyboardChar(GLFWwindow *window, unsigned int key) {
     case 'q':
         quit(window);
         break;
-    case 'A':
-    case 'a':
-        bool a = true;
     default:
         break;
     }

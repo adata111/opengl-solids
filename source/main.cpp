@@ -1,6 +1,7 @@
 #include "main.h"
 #include "timer.h"
 #include "ball.h"
+#include "input.h"
 #include <glm/gtx/string_cast.hpp>
 
 using namespace std;
@@ -14,13 +15,15 @@ GLFWwindow *window;
 **************************/
 
 Ball ball1;
+int id = 0;
+int prev_id = 0;
 
 float screen_zoom = 1, screen_center_x = 0, screen_center_y = 0;
 float camera_rotation_angle = 0;
 float fov = 100.0f;
 glm::vec3 line_of_sight (0, 0, -1);
 glm::vec3 eye (0,0,3);
-glm::vec3 up (0, 1, 0);
+glm::vec3 up (0, 1, 0);  // always in xy plane
 
 Timer t60(1.0 / 60);
 
@@ -52,7 +55,7 @@ void draw() {
     // Compute ViewProject matrix as view/camera might not be changed for this frame (basic scenario)
     // Don't change unless you are sure!!
     
-    Matrices.projection = glm::perspective(glm::radians(fov), 800.0f / 600.0f, 0.1f, 100.0f);  
+    // Matrices.projection = glm::perspective(glm::radians(fov), 800.0f / 600.0f, 0.1f, 100.0f);  
     glm::mat4 VP = Matrices.projection * Matrices.view;
 
     // Send our transformation to the currently bound shader, in the "MVP" uniform
@@ -65,66 +68,80 @@ void draw() {
 }
 
 void tick_input(GLFWwindow *window) {
-    int left  = glfwGetKey(window, GLFW_KEY_LEFT);
-    int right = glfwGetKey(window, GLFW_KEY_RIGHT);
-    int key_up = glfwGetKey(window, GLFW_KEY_UP);
-    int key_down = glfwGetKey(window, GLFW_KEY_DOWN);
-    int o = glfwGetKey(window, GLFW_KEY_O);
-    int i = glfwGetKey(window, GLFW_KEY_I);
-    int b = glfwGetKey(window, GLFW_KEY_B);
+    // int key_left  = glfwGetKey(window, GLFW_KEY_LEFT);
+    // int key_right = glfwGetKey(window, GLFW_KEY_RIGHT);
+    // int key_up = glfwGetKey(window, GLFW_KEY_UP);
+    // int key_down = glfwGetKey(window, GLFW_KEY_DOWN);
+    // int o = glfwGetKey(window, GLFW_KEY_O);
+    // int i = glfwGetKey(window, GLFW_KEY_I);
+    // int b = glfwGetKey(window, GLFW_KEY_B);
     
-    int a = glfwGetKey(window, GLFW_KEY_A);
-    int d = glfwGetKey(window, GLFW_KEY_D);
-    int s = glfwGetKey(window, GLFW_KEY_S);
-    int w = glfwGetKey(window, GLFW_KEY_W);
-    int z = glfwGetKey(window, GLFW_KEY_Z);
-    int x = glfwGetKey(window, GLFW_KEY_X);
-    int c = glfwGetKey(window, GLFW_KEY_C);
+    // // int a = glfwGetKey(window, GLFW_KEY_A);
+    // int d = glfwGetKey(window, GLFW_KEY_D);
+    // int s = glfwGetKey(window, GLFW_KEY_S);
+    // int w = glfwGetKey(window, GLFW_KEY_W);
+    // int z = glfwGetKey(window, GLFW_KEY_Z);
+    // int x = glfwGetKey(window, GLFW_KEY_X);
+    // int c = glfwGetKey(window, GLFW_KEY_C);
     
-    int u = glfwGetKey(window, GLFW_KEY_U);
+    // int u = glfwGetKey(window, GLFW_KEY_U);
+    // int l = glfwGetKey(window, GLFW_KEY_L);
+    // int n = glfwGetKey(window, GLFW_KEY_N);
     const float cameraSpeed = 0.05f;
-    if (right) {
+    if (key_right== GLFW_PRESS) {
         // Do something
         ball1.right();
+        // key_right = false;
         // eye += glm::normalize(glm::cross(line_of_sight, up)) * cameraSpeed;
         // screen_center_x += 1;
     }
-    else if (left) {
+    else if (key_left== GLFW_PRESS) {
         ball1.left();
+        // key_left = false;
         // eye += glm::normalize(glm::cross(line_of_sight, -up)) * cameraSpeed;
     }
-    else if (key_up) {
+    else if (key_up== GLFW_PRESS) {
         ball1.up();
+        // key_up = false;
         // eye += up * cameraSpeed;
     }
     else if (key_down) {
         ball1.down();
+        // key_down = false;
         // eye += -up * cameraSpeed;
     }
     else if (o) {
         ball1.out();
+        // o = false;
     }
     else if (i) {
         ball1.in();
+        // i = false;
     }
     else if (b) {
         ball1.spin();
+        // b = false;
     }
 
     else if (a) {
         eye += glm::normalize(glm::cross(line_of_sight, -up)) * cameraSpeed;
+        // a = false;
     }
     else if (d) {
         eye += glm::normalize(glm::cross(line_of_sight, up)) * cameraSpeed;
+        // d = false;
     }
     else if (w) {
         eye += up * cameraSpeed;
+        // w = false;
     }
     else if (s) {
         eye += -up * cameraSpeed;
+        // s = false;
     }
     else if (x) {
         eye += -line_of_sight * cameraSpeed;
+        // x = false;
         // cout<<"eye "<<glm::to_string(eye)<<endl;
         // fov -= 0.1;
         // if (fov < 1.0f)
@@ -135,6 +152,7 @@ void tick_input(GLFWwindow *window) {
     }
     else if (z) {
         eye += line_of_sight * cameraSpeed;
+        // z = false;
         //  fov += 0.1;
         // if (fov < 1.0f)
         //     fov = 1.0f;
@@ -146,12 +164,58 @@ void tick_input(GLFWwindow *window) {
         glm::vec3 temp = eye;
         eye += glm::normalize(glm::cross(line_of_sight, up))*cameraSpeed;
         line_of_sight = glm::normalize(ball1.position-eye);
+        // c = false;
     }
 
     else if (u){
         eye = glm::vec3 (0,5,0);
         line_of_sight = glm::normalize(ball1.position-eye);
-        up = glm::vec3 (0, 0, -1);
+        if(line_of_sight.x == 0 && line_of_sight.y == 0 && line_of_sight.z == 0 ){
+            line_of_sight = glm::vec3(0,-1,0);
+        }
+         // on cross multiplying with this vector we'll get a vector in xy plane that is perpendicular to line of sight
+        glm::vec3 vect = line_of_sight + glm::vec3(0,0,1);
+        up = glm::normalize(glm::cross(line_of_sight, vect));
+        // up = glm::vec3(0,0,-1);
+        // u = false;
+    }
+    else if (l) {
+        eye = glm::vec3 (-5,0,0);
+        line_of_sight = glm::normalize(ball1.position-eye);
+        if(line_of_sight.x == 0 && line_of_sight.y == 0 && line_of_sight.z == 0 ){
+            line_of_sight = glm::vec3(1,0,0);
+        }
+         // on cross multiplying with this vector we'll get a vector in xy plane that is perpendicular to line of sight
+        glm::vec3 vect = line_of_sight + glm::vec3(0,0,1);
+        up = glm::normalize(glm::cross(line_of_sight, vect));
+        // up = glm::vec3 (0,1,0);
+        // l = false;
+    }
+    else if (n) {
+        eye = glm::vec3 (0,0,5);
+        line_of_sight = glm::normalize(ball1.position-eye);
+        if(line_of_sight.x == 0 && line_of_sight.y == 0 && line_of_sight.z == 0 ){
+            line_of_sight = glm::vec3(0,0,-1);
+        }
+         // on cross multiplying with this vector we'll get a vector in xy plane that is perpendicular to line of sight
+        glm::vec3 vect = line_of_sight + glm::vec3(0,0,1);
+        if(line_of_sight.x == 0 && line_of_sight.y==0){
+            vect += glm::vec3(1,0,0);
+        }
+        else if(line_of_sight.z==0){
+            vect += glm::vec3(0,0,1);
+        }
+        
+        // up = glm::vec3 (0,1,0);
+        up = glm::normalize(glm::cross(line_of_sight, vect));
+        if(up.y < 0){
+            up = -up;
+        }
+        // cout<<"up "<<glm::to_string(up)<<endl;
+        // cout<<"los "<<glm::to_string(line_of_sight)<<endl;
+        
+        // up = glm::vec3(0,0,0) - up;
+        // n = false;
     }
 }
 
@@ -193,7 +257,7 @@ void initGL(GLFWwindow *window, int width, int height) {
 int main(int argc, char **argv) {
     srand(time(0));
     int width  = 800;
-    int height = 600;
+    int height = 800;
 
     window = initGLFW(width, height);
 
@@ -204,6 +268,7 @@ int main(int argc, char **argv) {
         // Process timers
 
         if (t60.processTick()) {
+            
             // 60 fps
             // OpenGL Draw commands
             draw();
@@ -212,6 +277,7 @@ int main(int argc, char **argv) {
 
             // tick_elements();
             tick_input(window);
+            prev_id = id;
         }
 
         // Poll for Keyboard and mouse events
