@@ -178,7 +178,7 @@ void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods) {
 
         case GLFW_KEY_SPACE:
             id++;
-            id = id%4;
+            id = id%5;
         default:
             break;
         }
