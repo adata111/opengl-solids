@@ -29,7 +29,7 @@ void Ball::draw(glm::mat4 VP) {
     glm::mat4 MVP = VP * Matrices.model;
     glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
     if(prev_id!=id){
-        std::cout<<"switch\n";
+        // std::cout<<"switch\n";
         if(id==0)
             this->object = create3DObject(GL_TRIANGLES, 16*3, vertex_sd, color_sd, GL_FILL);
         else if(id==1)

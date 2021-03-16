@@ -8,6 +8,9 @@ Created 5 dodecahedrons in OpenGL
 
 Different dodecadrons can be viewed by pressing `spacebar`
 
+## My story :)
+So once upon a time we were all on campus and I was sitting in my hostel room(Elongated square dipyramid) doing my Graphics assignment when my friend chucked me out of the room and forced me to go to JC (yes, I had to be forced to go to JC). We went to JC and met the rest of the gang. We luckily got our favourite table (pentagonal antiprism) at JC. We were engaging in our favourite activities: discussing random nonsense and creating new records for the fastest time to drink a glass of nimboo paani (obviously I was just spectating xD). One of my friends then showed us a ring she got from her crush. It had a beautiful gem(pentagonal cupola) on it. We were admiring the ring when we noticed a star-like object(small stellated dodecahedron) approaching JC. It looked beautiful but it came closer and we realized how huge it was. Soon we were chased out of JC and the campus by the giant spiky object (great stellated dodecahedron) that we now know as Coronavirus :(
+
 ## Movement
 ### Shapes
 - Right, left, up and down using the respective arrow keys
