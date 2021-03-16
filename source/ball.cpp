@@ -10,7 +10,7 @@ Ball::Ball(float x, float y, float z) {
     if(id==0)
     this->object = create3DObject(GL_TRIANGLES, 16*3, vertex_sd, color_sd, GL_FILL);
     else if(id==1)
-    this->object = create3DObject(GL_TRIANGLES, 16*3, vertex_pa, color_pc, GL_FILL);
+    this->object = create3DObject(GL_TRIANGLES, 16*3, vertex_pa, color_pa, GL_FILL);
     else if(id==2)
     this->object = create3DObject(GL_TRIANGLES, 26*3, vertex_pc, color_pc, GL_FILL);
     else if(id==3)
@@ -33,7 +33,7 @@ void Ball::draw(glm::mat4 VP) {
         if(id==0)
             this->object = create3DObject(GL_TRIANGLES, 16*3, vertex_sd, color_sd, GL_FILL);
         else if(id==1)
-            this->object = create3DObject(GL_TRIANGLES, 16*3, vertex_pa, color_pc, GL_FILL);
+            this->object = create3DObject(GL_TRIANGLES, 16*3, vertex_pa, color_pa, GL_FILL);
         else if(id==2)
             this->object = create3DObject(GL_TRIANGLES, 26*3, vertex_pc, color_pc, GL_FILL);
         else if(id==3)
