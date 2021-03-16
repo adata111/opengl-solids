@@ -22,3 +22,13 @@ Different dodecadrons can be viewed by pressing `spacebar`
 - To change the position of the camera to (0,5,0): `U`
 - To change the position of the camera to (-5,0,0): `L`
 - To change the position of the camera to (0,0,5): `N`
+
+## To run
+- Run the following commands in the main directory:
+```bash
+mkdir build
+cd build
+cmake ..
+make
+./My-Shapes
+```
